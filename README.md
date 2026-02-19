@@ -9,4 +9,4 @@ El proyecto está enfocado en tres áreas principales:
 
 ## Descripción del proyecto
 
-Esta página funciona como una página principal donde se presentan las áreas de conocimiento, los recursos que se planean desarrollar y un formulario de contacto para personas interesadas en el proyecto o en colaborar. El diseño es sencillo y organizado, utilizando HTML semántico y una estructura clara para facilitar la navegación y la lectura. La página está publicada utilizando **GitHub Pages**: **[https://TU-USUARIO.github.io/IMClick-Project/](https://imclick-project.github.io/homepage/)**.
+Esta página funciona como una página principal donde se presentan las áreas de conocimiento, los recursos que se planean desarrollar y un formulario de contacto para personas interesadas en el proyecto o en colaborar. El diseño es sencillo y organizado, utilizando HTML semántico y una estructura clara para facilitar la navegación y la lectura. La página está publicada utilizando **[GitHub Pages](https://imclick-project.github.io/homepage/)**.
