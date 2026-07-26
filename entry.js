@@ -178,10 +178,66 @@
             const body = document.getElementById("article-body");
             if (body) {
                 body.innerHTML = html;
+                wrapSectionsCollapsible();
                 generateTOC();
                 initScrollSpy();
             }
         }
+    }
+
+    // --- Wrap h2 sections into collapsible accordion ---
+    function wrapSectionsCollapsible() {
+        const body = document.getElementById("article-body");
+        if (!body) return;
+
+        const children = Array.from(body.children);
+        const fragment = document.createDocumentFragment();
+        let currentHeader = null;
+        let currentContent = null;
+
+        function appendCurrentSection() {
+            if (currentHeader && currentContent) {
+                fragment.appendChild(currentHeader);
+                fragment.appendChild(currentContent);
+            }
+        }
+
+        children.forEach((el) => {
+            if (el.tagName === "H2") {
+                // Close previous section
+                appendCurrentSection();
+
+                // Create collapsible header
+                currentHeader = document.createElement("div");
+                currentHeader.className = "section-header";
+                currentHeader.innerHTML = '<h2>' + el.innerHTML + '</h2><i class="bi bi-chevron-down section-toggle"></i>';
+
+                // Create content container (collapsed by default)
+                currentContent = document.createElement("div");
+                currentContent.className = "section-content";
+
+                // Click to toggle using IIFE for closure
+                (function (header, content) {
+                    header.addEventListener("click", function () {
+                        header.classList.toggle("expanded");
+                        content.classList.toggle("expanded");
+                    });
+                })(currentHeader, currentContent);
+
+            } else if (currentContent) {
+                // Add element to current section content
+                currentContent.appendChild(el);
+            } else {
+                // Content before first h2 - keep as is
+                fragment.appendChild(el);
+            }
+        });
+
+        // Append last section
+        appendCurrentSection();
+
+        body.innerHTML = "";
+        body.appendChild(fragment);
     }
 
     // --- Table of Contents ---
@@ -190,9 +246,15 @@
         const tocList = document.getElementById("toc-list");
         if (!body || !tocList) return;
 
-        const headings = body.querySelectorAll("h2, h3");
-        if (headings.length === 0) {
-            // Hide TOC if no headings
+        // Find h2 inside section-headers and h3 inside section-content
+        const sectionHeaders = body.querySelectorAll(".section-header h2");
+        const h3s = body.querySelectorAll(".section-content h3");
+
+        const allHeadings = [];
+        sectionHeaders.forEach((h) => allHeadings.push({ el: h, tag: "H2" }));
+        h3s.forEach((h) => allHeadings.push({ el: h, tag: "H3" }));
+
+        if (allHeadings.length === 0) {
             const sidebar = document.querySelector(".toc-sidebar");
             const toggle = document.querySelector(".toc-toggle");
             if (sidebar) sidebar.style.display = "none";
@@ -201,9 +263,13 @@
         }
 
         tocList.innerHTML = "";
-        headings.forEach((h, i) => {
-            const id = "section-" + i;
+        let idx = 0;
+
+        // Build TOC in document order
+        body.querySelectorAll(".section-header h2, .section-content h3").forEach((h) => {
+            const id = "section-" + idx;
             h.id = id;
+            idx++;
 
             const li = document.createElement("li");
             const a = document.createElement("a");
@@ -214,7 +280,22 @@
 
             a.addEventListener("click", (e) => {
                 e.preventDefault();
-                document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "start" });
+                // If clicking a h2 in a collapsed section, expand it first
+                const sectionHeader = h.closest(".section-header");
+                if (sectionHeader && !sectionHeader.classList.contains("expanded")) {
+                    sectionHeader.click();
+                }
+                // If clicking a h3, expand its parent section
+                const sectionContent = h.closest(".section-content");
+                if (sectionContent && !sectionContent.classList.contains("expanded")) {
+                    const prevHeader = sectionContent.previousElementSibling;
+                    if (prevHeader && prevHeader.classList.contains("section-header")) {
+                        prevHeader.click();
+                    }
+                }
+                setTimeout(() => {
+                    document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "start" });
+                }, 100);
             });
 
             li.appendChild(a);
@@ -237,7 +318,7 @@
             });
         }, { rootMargin: "-80px 0px -60% 0px", threshold: 0 });
 
-        document.querySelectorAll("#article-body h2, #article-body h3").forEach((h) => {
+        document.querySelectorAll("#article-body .section-header h2, #article-body .section-content h3").forEach((h) => {
             observer.observe(h);
         });
     }

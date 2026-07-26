@@ -88,7 +88,7 @@
                 ctx.translate(s.x, s.y);
                 ctx.rotate(s.rotation);
                 ctx.font = s.size + 'px "JetBrains Mono", monospace';
-                ctx.fillStyle = "rgba(206, 28, 43, " + s.opacity + ")";
+                ctx.fillStyle = "rgba(255, 255, 255, " + s.opacity + ")";
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
                 ctx.fillText(s.glyph, 0, 0);
@@ -344,42 +344,26 @@
 
             return `
                 <article class="entry-card">
-                    <div class="entry-card-header">
-                        <div class="entry-card-header-left">
-                            <span class="entry-card-category">${catLabel}</span>
-                            <h3 class="entry-card-title">${title}</h3>
-                        </div>
-                        <i class="bi bi-chevron-down entry-card-toggle"></i>
+                    ${image ? `<img class="entry-card-image" src="${image}" alt="${title}">` : ""}
+                    <div class="entry-card-body">
+                        <span class="entry-card-category">${catLabel}</span>
+                        <h3 class="entry-card-title">${title}</h3>
+                        <p class="entry-card-desc">${desc}</p>
+                        ${tags.length ? `<div class="entry-card-tags">${tags.map((t) => `<span class="entry-tag" data-tag="${t}">${t}</span>`).join("")}</div>` : ""}
                     </div>
-                    <div class="entry-card-collapsible">
-                        ${image ? `<img class="entry-card-image" src="${image}" alt="${title}">` : ""}
-                        <div class="entry-card-body">
-                            <p class="entry-card-desc">${desc}</p>
-                            ${tags.length ? `<div class="entry-card-tags">${tags.map((t) => `<span class="entry-tag" data-tag="${t}">${t}</span>`).join("")}</div>` : ""}
-                        </div>
-                        <div class="entry-card-footer">
-                            <span class="entry-card-date">${dateStr}</span>
-                            <a href="${link}" target="_blank" rel="noopener noreferrer" class="entry-card-link">
-                                ${isEnglish ? "See more" : "Ver más"} <i class="bi bi-arrow-right-short"></i>
-                            </a>
-                        </div>
+                    <div class="entry-card-footer">
+                        <span class="entry-card-date">${dateStr}</span>
+                        <a href="${link}" target="_blank" rel="noopener noreferrer" class="entry-card-link">
+                            ${isEnglish ? "See more" : "Ver más"} <i class="bi bi-arrow-right-short"></i>
+                        </a>
                     </div>
                 </article>
             `;
         }).join("");
 
-        // Attach card expand/collapse handlers
-        grid.querySelectorAll(".entry-card-header").forEach((header) => {
-            header.addEventListener("click", () => {
-                const card = header.closest(".entry-card");
-                card.classList.toggle("expanded");
-            });
-        });
-
         // Attach tag click handlers
         grid.querySelectorAll(".entry-tag").forEach((tagEl) => {
-            tagEl.addEventListener("click", (e) => {
-                e.stopPropagation();
+            tagEl.addEventListener("click", () => {
                 const tag = tagEl.dataset.tag;
                 if (currentTag.includes(tag)) {
                     currentTag = currentTag.filter((t) => t !== tag);
