@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMClick-Project | Ingeniería Química</title>
+    <link rel="icon" type="image/png" href="images/logoico.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="subject.css">
+</head>
+<body class="subject-page subject-ingenieria-quimica" data-subject="ingenieria-quimica">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="logo">
+                    <a href="index.html"><img src="images/logo.png" alt="IMClick Logo"></a>
+                </div>
+                <ul class="menu">
+                    <li class="dropdown">
+                        <a href="index.html#study-areas">Áreas de estudio</a>
+                        <ul class="submenu">
+                            <li><a href="informatica.html">Informática</a></li>
+                            <li><a href="matematicas.html">Matemáticas</a></li>
+                            <li class="disabled"><a href="#">Ingeniería Química</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="index.html#aboutme">Sobre mí</a></li>
+                    <li><a href="index.html#contact">Contacto</a></li>
+                </ul>
+            </div>
+            <a href="#" class="lang">ENG</a>
+        </div>
+    </nav>
+
+    <!-- Page Layout -->
+    <div class="subject-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav"></nav>
+        </aside>
+        <button class="sidebar-toggle"><i class="bi bi-chevron-left"></i></button>
+
+        <!-- Main Content -->
+        <main class="subject-content">
+            <div class="subject-hero">
+                <canvas class="subject-hero-canvas" id="subject-hero-canvas"></canvas>
+                <img src="images/logoC2.png" alt="Ingeniería Química">
+                <div class="subject-hero-text">
+                    <h1>Ingeniería Química</h1>
+                    <p>Principios, aplicaciones, ejercicios y recursos de aprendizaje.</p>
+                </div>
+            </div>
+
+            <div class="content-toolbar">
+                <div class="search-box">
+                    <i class="bi bi-search"></i>
+                    <input type="text" placeholder="Buscar entradas...">
+                </div>
+                <div class="active-filters"></div>
+            </div>
+
+            <div class="entries-grid"></div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>&copy; 2026 IMClick-Project. Derechos Reservados.</p>
+        </div>
+    </footer>
+
+    <script src="data/ingenieria-quimica-data.js"></script>
+    <script src="subject.js"></script>
+</body>
+</html>

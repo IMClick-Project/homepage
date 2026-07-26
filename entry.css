@@ -1,0 +1,420 @@
+/* ========================================
+   IMClick-Project — Entry Page Styles
+   ======================================== */
+
+/* --- Layout --- */
+.entry-page {
+    background: #2b1520;
+    min-height: 100vh;
+    padding-top: 64px;
+}
+
+.entry-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 30px 60px;
+    display: flex;
+    gap: 30px;
+    position: relative;
+}
+
+/* --- Breadcrumb --- */
+.breadcrumb {
+    padding: 16px 30px 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+}
+
+.breadcrumb a {
+    color: rgba(255,255,255,0.6);
+    transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+    color: #ff4d5a;
+}
+
+.breadcrumb span {
+    margin: 0 6px;
+    opacity: 0.4;
+}
+
+/* --- Table of Contents (TOC) Sidebar --- */
+.toc-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 80px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+.toc-sidebar.collapsed {
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.toc-toggle {
+    position: sticky;
+    top: 80px;
+    z-index: 10;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s, color 0.2s;
+}
+
+.toc-toggle:hover {
+    background: #ce1c2b;
+    color: white;
+}
+
+.toc-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 12px;
+    padding: 0 8px;
+}
+
+.toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc-list li {
+    margin-bottom: 2px;
+}
+
+.toc-list a {
+    display: block;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    border-left: 2px solid transparent;
+    border-radius: 0 6px 6px 0;
+    transition: all 0.2s;
+    line-height: 1.4;
+}
+
+.toc-list a:hover {
+    color: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.03);
+}
+
+.toc-list a.active {
+    color: #ff4d5a;
+    border-left-color: #ce1c2b;
+    background: rgba(206,28,43,0.06);
+}
+
+.toc-list .toc-h3 {
+    padding-left: 24px;
+    font-size: 12px;
+}
+
+/* --- Article Content --- */
+.article-container {
+    flex: 1;
+    min-width: 0;
+}
+
+.article-header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.article-header h1 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 14px;
+    line-height: 1.3;
+}
+
+.article-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+}
+
+.article-meta .meta-date {
+    font-family: "JetBrains Mono", monospace;
+}
+
+.article-meta .meta-category {
+    background: rgba(206,28,43,0.1);
+    color: #ff4d5a;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.article-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+.article-tags .tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* --- Article Body (rendered markdown) --- */
+.article-body {
+    color: rgba(255,255,255,0.8);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.article-body h2 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin: 36px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.article-body h3 {
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.9);
+    margin: 28px 0 12px;
+}
+
+.article-body p {
+    margin-bottom: 16px;
+}
+
+.article-body a {
+    color: #ff4d5a;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.article-body a:hover {
+    color: #ffffff;
+}
+
+.article-body img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin: 20px 0;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+.article-body ul, .article-body ol {
+    margin: 12px 0 16px 20px;
+}
+
+.article-body li {
+    margin-bottom: 6px;
+}
+
+.article-body blockquote {
+    border-left: 3px solid #ce1c2b;
+    padding: 12px 20px;
+    margin: 16px 0;
+    background: rgba(206,28,43,0.04);
+    border-radius: 0 8px 8px 0;
+    color: rgba(255,255,255,0.7);
+}
+
+.article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.article-body th, .article-body td {
+    padding: 10px 14px;
+    border: 1px solid rgba(255,255,255,0.08);
+    text-align: left;
+}
+
+.article-body th {
+    background: rgba(255,255,255,0.04);
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Code blocks */
+.article-body pre {
+    background: #1a0a10;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 18px 20px;
+    overflow-x: auto;
+    margin: 18px 0;
+    font-size: 14px;
+}
+
+.article-body code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.9em;
+}
+
+.article-body p code, .article-body li code {
+    background: rgba(255,255,255,0.06);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+}
+
+/* KaTeX formulas */
+.article-body .katex-display {
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+/* --- Related Entries --- */
+.related-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 30px 40px;
+}
+
+.related-section h2 {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.related-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.related-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(206,28,43,0.3);
+    box-shadow: 0 8px 20px rgba(206,28,43,0.1);
+}
+
+.related-card img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.related-card-text h4 {
+    font-size: 14px;
+    color: #f0f0f5;
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+.related-card-text p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.4;
+}
+
+/* Back button */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.back-btn:hover {
+    background: #ce1c2b;
+    border-color: #ce1c2b;
+    color: white;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .entry-wrapper {
+        flex-direction: column;
+        padding: 20px 16px 40px;
+    }
+
+    .toc-sidebar {
+        position: static;
+        width: 100%;
+        max-height: none;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 10px;
+        padding: 14px;
+        background: rgba(255,255,255,0.02);
+    }
+
+    .toc-sidebar.collapsed {
+        width: 100%;
+        height: 0;
+        padding: 0;
+        border: none;
+    }
+
+    .toc-toggle {
+        position: static;
+        width: 100%;
+        height: auto;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        font-size: 13px;
+        gap: 6px;
+    }
+
+    .related-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .breadcrumb {
+        padding: 12px 16px 0;
+    }
+}

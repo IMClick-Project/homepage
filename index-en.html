@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMClick-Project | Home</title>
+    <link rel="icon" type="image/png" href="images/logoico.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="logo">
+                    <a href="index-en.html"><img src="images/logo.png" alt="IMClick Logo"></a>
+                </div>
+                <button class="menu-toggle" aria-label="Open menu">&#9776;</button>
+                <ul class="menu">
+                    <li class="dropdown">
+                        <a href="#study-areas">Study areas</a>
+                        <ul class="submenu">
+                            <li><a href="informatica.html">Informatics</a></li>
+                            <li><a href="matematicas.html">Math</a></li>
+                            <li><a href="ingenieria-quimica.html">Chemical Engineering</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#aboutme">About me</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <a href="index.html" class="lang">ESP</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-container">
+            <div class="hero-left">
+                <h1 class="project-name">IMClick <span class="dash">-</span> Project</h1>
+                <h2 class="slogan">
+                    Think like a scientist.<br>Solve like an engineer.
+                </h2>
+                <p class="description">
+                    A platform to share and explore ideas in math,
+                    informatics and chemical engineering in a clear,
+                    dynamic and accessible way.
+                </p>
+            </div>
+            <div class="hero-right">
+                <img src="images/logoI.png" class="logo-part braces" alt="Informatics Logo">
+                <img src="images/logoM.png" class="logo-part compass" alt="Math Logo">
+                <img src="images/logoC.png" class="logo-part flask" alt="Chemical Engineering Logo">
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <i class="bi bi-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Study Areas -->
+    <section id="study-areas" class="section-padding">
+        <h1 class="section-title reveal">Study areas</h1>
+        <div class="cards-container">
+            <a href="informatica.html" class="card reveal" data-delay="0">
+                <img src="images/logoI2.png" alt="Informatics">
+                <h2>Informatics</h2>
+                <p>Fundamentals, algorithms, logic and competitive programming.</p>
+            </a>
+            <a href="matematicas.html" class="card reveal" data-delay="100">
+                <img src="images/logoM2.png" alt="Math">
+                <h2>Math</h2>
+                <p>Theory, reasoning and problem solving for school and competition mathematics.</p>
+            </a>
+            <a href="ingenieria-quimica.html" class="card reveal" data-delay="200">
+                <img src="images/logoC2.png" alt="Chemical Engineering">
+                <h2>Chemical Engineering</h2>
+                <p>Principles, applications, exercises and learning resources.</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Resources -->
+    <section class="resources section-padding">
+        <h2 class="section-title reveal">Resources</h2>
+        <div class="resources-container">
+            <article class="resource-card reveal" data-delay="0" data-resource="notas-teoricas">
+                <i class="bi bi-journal-text"></i>
+                <p>Theory notes</p>
+            </article>
+            <article class="resource-card reveal" data-delay="50" data-resource="bibliografia">
+                <i class="bi bi-book"></i>
+                <p>Relevant bibliography</p>
+            </article>
+            <article class="resource-card reveal" data-delay="100" data-resource="ejercicios-resueltos">
+                <i class="bi bi-calculator"></i>
+                <p>Solved exercises</p>
+            </article>
+            <article class="resource-card reveal" data-delay="150" data-resource="proyectos-integrales">
+                <i class="bi bi-diagram-3"></i>
+                <p>Integrated projects</p>
+            </article>
+            <article class="resource-card reveal" data-delay="200" data-resource="codigos-documentados">
+                <i class="bi bi-code-slash"></i>
+                <p>Documented code</p>
+            </article>
+            <article class="resource-card reveal" data-delay="250" data-resource="simuladores">
+                <i class="bi bi-laptop"></i>
+                <p>Interactive simulators</p>
+            </article>
+            <article class="resource-card reveal" data-delay="300" data-resource="videos">
+                <i class="bi bi-play-circle"></i>
+                <p>Videos and animations</p>
+            </article>
+            <article class="resource-card reveal" data-delay="350" data-resource="cursos">
+                <i class="bi bi-mortarboard"></i>
+                <p>Courses</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- About Me -->
+    <section id="aboutme" class="section-padding">
+        <div class="about-header reveal">
+            <h1>About me</h1>
+            <div class="social-links">
+                <a href="https://linkedin.com/in/mariola-camacho-lie-21a379216" target="_blank" rel="noopener noreferrer"><img src="images/linkedin.png" alt="LinkedIn"></a>
+                <a href="https://colab.ws/researchers/R-3AE3F-05240-OW73K" target="_blank" rel="noopener noreferrer"><img src="images/colab.png" alt="Colab"></a>
+                <a href="https://www.researchgate.net/profile/Mariola-Camacho-Lie" target="_blank" rel="noopener noreferrer"><img src="images/researchgate.png" alt="ResearchGate"></a>
+            </div>
+        </div>
+        <div class="about-grid">
+            <div class="about-carousel reveal">
+                <img src="images/photo1.jpg" class="active" alt="Photo 1" loading="lazy">
+                <img src="images/photo2.jpg" alt="Photo 2" loading="lazy">
+                <img src="images/photo3.jpg" alt="Photo 3" loading="lazy">
+                <img src="images/photo4.jpg" alt="Photo 4" loading="lazy">
+                <img src="images/photo5.jpg" alt="Photo 5" loading="lazy">
+                <img src="images/photo6.jpg" alt="Photo 6" loading="lazy">
+                <img src="images/photo7.jpg" alt="Photo 7" loading="lazy">
+            </div>
+            <div class="about-text reveal" data-delay="100">
+                <p>
+                    My name is Mariola. I hold a Master's degree in Chemical
+                    Engineering and I am currently a PhD student interested in
+                    modeling, simulation, optimization and process control.
+                    I enjoy combining programming, science and engineering
+                    to understand complex systems and develop tools that help
+                    explain and solve problems.
+                </p>
+            </div>
+            <div class="about-text reveal" data-delay="200">
+                <p>
+                    From a young age I participated in math and informatics
+                    olympiads. These experiences strongly shaped the way I
+                    learn and think. They helped me discover the value of
+                    reasoning, creativity in problem solving, and discipline
+                    in learning, skills that have influenced my academic and
+                    professional path ever since.
+                </p>
+            </div>
+            <div class="about-text about-full reveal" data-delay="300">
+                <p>
+                    This project was born from those experiences. My goal is
+                    to share knowledge in math, informatics and chemical
+                    engineering so that more students can discover their
+                    interest in science and technology, develop curiosity and
+                    find inspiration to keep learning.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section-padding">
+        <div class="contact-container">
+            <div class="contact-left reveal">
+                <div class="social-group">
+                    <h2>View Content</h2>
+                    <div class="social-icons">
+                        <a href="#" aria-label="GitHub"><img src="images/github.png" alt="GitHub"></a>
+                        <a href="#" aria-label="YouTube"><img src="images/youtube.png" alt="YouTube"></a>
+                        <a href="#" aria-label="TikTok"><img src="images/tiktok.png" alt="TikTok"></a>
+                    </div>
+                </div>
+                <div class="social-group">
+                    <h2>Build Community</h2>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><img src="images/facebook.png" alt="Facebook"></a>
+                        <a href="#" aria-label="Instagram"><img src="images/instagram.png" alt="Instagram"></a>
+                        <a href="#" aria-label="Discord"><img src="images/discord.png" alt="Discord"></a>
+                    </div>
+                </div>
+                <div class="social-group">
+                    <h2>Support Us</h2>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Patreon"><img src="images/patreon.png" alt="Patreon"></a>
+                        <a href="#" aria-label="Udemy"><img src="images/udemy.png" alt="Udemy"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-right reveal" data-delay="150">
+                <h1>Contact Us</h1>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit">Send <i class="bi bi-send"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>&copy; 2026 IMClick-Project. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="animations.js"></script>
+</body>
+</html>
