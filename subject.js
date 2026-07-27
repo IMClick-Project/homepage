@@ -88,7 +88,7 @@
                 ctx.translate(s.x, s.y);
                 ctx.rotate(s.rotation);
                 ctx.font = s.size + 'px "JetBrains Mono", monospace';
-                ctx.fillStyle = "rgba(206, 28, 43, " + s.opacity + ")";
+                ctx.fillStyle = "rgba(255, 255, 255, " + s.opacity + ")";
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
                 ctx.fillText(s.glyph, 0, 0);
