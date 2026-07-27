@@ -60,7 +60,7 @@
                 vy: (Math.random() - 0.5) * 0.2,
                 glyph: glyphs[Math.floor(Math.random() * glyphs.length)],
                 size: Math.random() * 12 + 10,
-                opacity: Math.random() * 0.15 + 0.05,
+                opacity: Math.random() * 0.3 + 0.15,
                 rotation: Math.random() * Math.PI * 2,
                 rotationSpeed: (Math.random() - 0.5) * 0.004,
             };
@@ -88,7 +88,7 @@
                 ctx.translate(s.x, s.y);
                 ctx.rotate(s.rotation);
                 ctx.font = s.size + 'px "JetBrains Mono", monospace';
-                ctx.fillStyle = "rgba(255, 255, 255, " + s.opacity + ")";
+                ctx.fillStyle = "rgba(206, 28, 43, " + s.opacity + ")";
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
                 ctx.fillText(s.glyph, 0, 0);
@@ -301,8 +301,11 @@
 
         // Filter entries
         let filtered = entries.filter((entry) => {
-            // Category filter
-            if (currentCategory !== "all" && entry.category !== currentCategory) return false;
+            // Category filter (supports single string or array of categories)
+            if (currentCategory !== "all") {
+                const cats = Array.isArray(entry.category) ? entry.category : [entry.category];
+                if (!cats.includes(currentCategory)) return false;
+            }
 
             // Tag filter
             if (currentTag.length > 0) {
@@ -335,9 +338,11 @@
             const title = isEnglish ? (entry.title_en || entry.title) : entry.title;
             const desc = isEnglish ? (entry.description_en || entry.description) : entry.description;
             const tags = isEnglish ? (entry.tags_en || entry.tags || []) : (entry.tags || []);
-            const catLabel = CATEGORIES[entry.category]
-                ? (isEnglish ? CATEGORIES[entry.category].en : CATEGORIES[entry.category].es)
-                : entry.category;
+            const cats = Array.isArray(entry.category) ? entry.category : [entry.category];
+            const catLabel = cats.map((c) => CATEGORIES[c]
+                ? (isEnglish ? CATEGORIES[c].en : CATEGORIES[c].es)
+                : c
+            ).join(" · ");
             const dateStr = entry.date || "";
             const link = entry.link || "#";
             const image = entry.image || "";

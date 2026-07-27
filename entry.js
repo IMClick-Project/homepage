@@ -76,8 +76,10 @@
 
         const home = isEnglish ? "Home" : "Inicio";
         const subName = SUBJECT_NAMES[subject] ? (isEnglish ? SUBJECT_NAMES[subject].en : SUBJECT_NAMES[subject].es) : subject;
-        const catName = currentEntry && CATEGORIES[currentEntry.category]
-            ? (isEnglish ? CATEGORIES[currentEntry.category].en : CATEGORIES[currentEntry.category].es)
+        const catName = currentEntry
+            ? (Array.isArray(currentEntry.category) ? currentEntry.category : [currentEntry.category])
+                .map((c) => CATEGORIES[c] ? (isEnglish ? CATEGORIES[c].en : CATEGORIES[c].es) : c)
+                .join(" · ")
             : "";
 
         el.innerHTML = `<a href="index.html">${home}</a><span>›</span><a href="${subject}.html">${subName}</a><span>›</span><span>${catName}</span>`;
@@ -96,9 +98,11 @@
         }
 
         if (metaEl) {
-            const catLabel = CATEGORIES[currentEntry.category]
-                ? (isEnglish ? CATEGORIES[currentEntry.category].en : CATEGORIES[currentEntry.category].es)
-                : currentEntry.category;
+            const cats = Array.isArray(currentEntry.category) ? currentEntry.category : [currentEntry.category];
+            const catLabel = cats.map((c) => CATEGORIES[c]
+                ? (isEnglish ? CATEGORIES[c].en : CATEGORIES[c].es)
+                : c
+            ).join(" · ");
             metaEl.innerHTML = `
                 <span class="meta-date">${currentEntry.date || ""}</span>
                 <span class="meta-category">${catLabel}</span>
@@ -356,8 +360,13 @@
             relatedEntries = subjectData.entries.filter((e) => relatedFiles.includes(e.file));
         } else {
             // Fallback: show entries from same category (max 3)
+            const currentCats = Array.isArray(currentEntry.category) ? currentEntry.category : [currentEntry.category];
             relatedEntries = subjectData.entries
-                .filter((e) => e.category === currentEntry.category && e.file !== currentEntry.file)
+                .filter((e) => {
+                    if (e.file === currentEntry.file) return false;
+                    const eCats = Array.isArray(e.category) ? e.category : [e.category];
+                    return eCats.some((c) => currentCats.includes(c));
+                })
                 .slice(0, 3);
         }
 
