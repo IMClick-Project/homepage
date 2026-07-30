@@ -10,7 +10,7 @@
 
 .entry-layout {
     display: flex;
-    min-height: 100vh;
+    min-height: calc(100vh - 64px);
     padding-top: 64px;
     background: #ffffff;
 }
@@ -500,15 +500,15 @@
 
 /* Entry page footer */
 .entry-page .footer {
-    background: #f9d4d7;
-    border-top: 1px solid rgba(206, 28, 43, 0.15);
+    background: #ffffff;
+    border-top: 1px solid rgba(206, 28, 43, 0.1);
     margin-left: 0;
     position: relative;
     z-index: 200;
 }
 
 .entry-page .footer p {
-    color: #444444;
+    color: #ce1c2b;
 }
 
 /* --- Responsive --- */
