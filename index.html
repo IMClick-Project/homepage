@@ -234,5 +234,21 @@
     </footer>
 
     <script src="animations.js"></script>
+    <script>
+        // Sync language: if user previously chose English, redirect
+        (function() {
+            var lang = localStorage.getItem("imclick-lang");
+            if (lang === "en" && window.location.pathname.indexOf("index-en") === -1) {
+                window.location.replace("index-en.html");
+            }
+            // When clicking lang button, save to localStorage
+            var langBtn = document.querySelector(".lang");
+            if (langBtn) {
+                langBtn.addEventListener("click", function() {
+                    localStorage.setItem("imclick-lang", "en");
+                });
+            }
+        })();
+    </script>
 </body>
 </html>

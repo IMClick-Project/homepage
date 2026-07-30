@@ -36,38 +36,41 @@
         </div>
     </nav>
 
-    <!-- Breadcrumb -->
-    <div class="breadcrumb" id="breadcrumb"></div>
-
-    <!-- Main Layout -->
-    <div class="entry-wrapper">
-        <!-- TOC Toggle -->
-        <button class="toc-toggle"><i class="bi bi-x-lg"></i></button>
-
-        <!-- TOC Sidebar -->
+    <!-- Page Layout like subject -->
+    <div class="entry-layout">
+        <!-- TOC Sidebar (fixed, like subject sidebar) -->
         <aside class="toc-sidebar">
-            <div class="toc-title">Contenido</div>
-            <ul class="toc-list" id="toc-list"></ul>
+            <nav class="toc-nav">
+                <div class="toc-title">Contenido</div>
+                <ul class="toc-list" id="toc-list"></ul>
+            </nav>
         </aside>
+        <button class="toc-toggle"><i class="bi bi-chevron-left"></i></button>
 
-        <!-- Article -->
-        <article class="article-container">
-            <header class="article-header">
-                <h1 id="article-title"></h1>
-                <div class="article-meta" id="article-meta"></div>
-                <div class="article-tags" id="article-tags"></div>
-            </header>
-            <div class="article-body" id="article-body">
-                <!-- Rendered from Markdown -->
-            </div>
-        </article>
+        <!-- Main Content -->
+        <main class="entry-content">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb" id="breadcrumb"></div>
+
+            <!-- Article -->
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 id="article-title"></h1>
+                    <div class="article-meta" id="article-meta"></div>
+                    <div class="article-tags" id="article-tags"></div>
+                </header>
+                <div class="article-body" id="article-body">
+                    <!-- Rendered from Markdown -->
+                </div>
+            </article>
+
+            <!-- Related Entries -->
+            <section class="related-section" id="related-section"></section>
+
+            <!-- Back Button -->
+            <div class="related-section" id="back-container"></div>
+        </main>
     </div>
-
-    <!-- Related Entries -->
-    <section class="related-section" id="related-section"></section>
-
-    <!-- Back Button -->
-    <div class="related-section" id="back-container"></div>
 
     <!-- Footer -->
     <footer class="footer">

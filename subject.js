@@ -120,13 +120,21 @@
 
     // --- Init ---
     document.addEventListener("DOMContentLoaded", () => {
-        isEnglish = document.documentElement.lang === "en";
+        // Read language from localStorage
+        const savedLang = localStorage.getItem("imclick-lang");
+        if (savedLang) {
+            isEnglish = savedLang === "en";
+            document.documentElement.lang = isEnglish ? "en" : "es";
+        } else {
+            isEnglish = document.documentElement.lang === "en";
+        }
         initSidebar();
         initSidebarToggle();
         initSearch();
         initLangToggle();
         initHeroCanvas();
         loadData();
+        translateNavbarAndFooter();
     });
 
     // --- Load JSON data ---
@@ -244,6 +252,7 @@
             e.preventDefault();
             isEnglish = !isEnglish;
             document.documentElement.lang = isEnglish ? "en" : "es";
+            localStorage.setItem("imclick-lang", isEnglish ? "en" : "es");
             langBtn.textContent = isEnglish ? "ESP" : "ENG";
 
             // Re-render everything
@@ -252,13 +261,89 @@
             renderSubjectHero();
             updateActiveFilters();
             renderEntries();
-
-            // Update navbar links
-            const aboutLink = document.querySelector('[href*="aboutme"], [href*="sobre"]');
-            const contactLink = document.querySelector('[href*="contact"]');
-            if (aboutLink) aboutLink.textContent = isEnglish ? "About me" : "Sobre mí";
-            if (contactLink) contactLink.textContent = isEnglish ? "Contact" : "Contacto";
+            translateNavbarAndFooter();
         });
+    }
+
+    // --- Translate Navbar and Footer ---
+    function translateNavbarAndFooter() {
+        // Navbar links
+        const menuLinks = document.querySelectorAll(".menu > li > a");
+        menuLinks.forEach((link) => {
+            if (link.getAttribute("href") && link.getAttribute("href").includes("study-areas")) {
+                link.textContent = isEnglish ? "Study areas" : "Áreas de estudio";
+            } else if (link.getAttribute("href") && link.getAttribute("href").includes("aboutme")) {
+                link.textContent = isEnglish ? "About me" : "Sobre mí";
+            } else if (link.getAttribute("href") && link.getAttribute("href").includes("contact")) {
+                link.textContent = isEnglish ? "Contact" : "Contacto";
+            }
+        });
+
+        // Submenu links
+        const submenuLinks = document.querySelectorAll(".submenu a");
+        submenuLinks.forEach((link) => {
+            const href = link.getAttribute("href") || "";
+            if (href.includes("informatica")) {
+                link.textContent = isEnglish ? "Informatics" : "Informática";
+            } else if (href.includes("matematicas")) {
+                link.textContent = isEnglish ? "Math" : "Matemáticas";
+            } else if (href.includes("ingenieria-quimica")) {
+                link.textContent = isEnglish ? "Chemical Engineering" : "Ingeniería Química";
+            }
+        });
+
+        // Disabled submenu (current page)
+        const disabledLinks = document.querySelectorAll(".submenu .disabled a");
+        disabledLinks.forEach((link) => {
+            const href = link.getAttribute("href") || link.parentElement.textContent || "";
+            if (href.includes("Informática") || href.includes("Informatics") || link.textContent.includes("Informática")) {
+                link.textContent = isEnglish ? "Informatics" : "Informática";
+            } else if (href.includes("Matemáticas") || link.textContent.includes("Matemáticas")) {
+                link.textContent = isEnglish ? "Math" : "Matemáticas";
+            } else if (href.includes("Ingeniería") || link.textContent.includes("Ingeniería")) {
+                link.textContent = isEnglish ? "Chemical Engineering" : "Ingeniería Química";
+            }
+        });
+
+        // Footer
+        const footerP = document.querySelector(".footer p");
+        if (footerP) {
+            footerP.textContent = isEnglish
+                ? "© 2026 IMClick-Project. All Rights Reserved."
+                : "© 2026 IMClick-Project. Derechos Reservados.";
+        }
+
+        // Subject hero text
+        const heroH1 = document.querySelector(".subject-hero-text h1");
+        const heroP = document.querySelector(".subject-hero-text p");
+        const subject = document.body.dataset.subject;
+        if (heroH1 && subject) {
+            const HERO_TEXT = {
+                "informatica": {
+                    es: { title: "Informática", desc: "Fundamentos, algoritmos, lógica y programación competitiva." },
+                    en: { title: "Informatics", desc: "Fundamentals, algorithms, logic and competitive programming." }
+                },
+                "matematicas": {
+                    es: { title: "Matemáticas", desc: "Teoría, razonamiento y resolución de problemas." },
+                    en: { title: "Math", desc: "Theory, reasoning and problem solving." }
+                },
+                "ingenieria-quimica": {
+                    es: { title: "Ingeniería Química", desc: "Principios, aplicaciones, ejercicios y recursos." },
+                    en: { title: "Chemical Engineering", desc: "Principles, applications, exercises and resources." }
+                }
+            };
+            const texts = HERO_TEXT[subject];
+            if (texts) {
+                heroH1.textContent = isEnglish ? texts.en.title : texts.es.title;
+                if (heroP) heroP.textContent = isEnglish ? texts.en.desc : texts.es.desc;
+            }
+        }
+
+        // Search placeholder
+        const searchInput = document.querySelector(".search-box input");
+        if (searchInput) {
+            searchInput.placeholder = isEnglish ? "Search entries..." : "Buscar entradas...";
+        }
     }
 
     // --- Active Filters Display ---

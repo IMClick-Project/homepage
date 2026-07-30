@@ -2,90 +2,73 @@
    IMClick-Project — Entry Page Styles
    ======================================== */
 
-/* --- Layout --- */
+/* --- Layout (same structure as subject pages) --- */
 .entry-page {
-    background: #2b1520;
+    background: #ffffff;
+    min-height: 100vh;
+}
+
+.entry-layout {
+    display: flex;
     min-height: 100vh;
     padding-top: 64px;
+    background: #ffffff;
 }
 
-.entry-wrapper {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 30px 30px 60px;
-    display: flex;
-    gap: 30px;
-    position: relative;
-}
-
-/* --- Breadcrumb --- */
-.breadcrumb {
-    padding: 16px 30px 0;
-    max-width: 1100px;
-    margin: 0 auto;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.breadcrumb a {
-    color: rgba(255, 255, 255, 0.7);
-    transition: color 0.2s;
-}
-
-.breadcrumb a:hover {
-    color: #ff4d5a;
-}
-
-.breadcrumb span {
-    margin: 0 6px;
-    opacity: 0.5;
-}
-
-/* --- Table of Contents (TOC) Sidebar --- */
+/* --- TOC Sidebar (fixed, tinto like subject sidebar) --- */
 .toc-sidebar {
-    width: 220px;
-    flex-shrink: 0;
-    position: sticky;
-    top: 80px;
-    max-height: calc(100vh - 100px);
+    width: 260px;
+    min-height: calc(100vh - 64px);
+    background: #2b1520;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    position: fixed;
+    top: 64px;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+    transition: transform 0.3s ease;
     overflow-y: auto;
-    transition: width 0.3s ease, opacity 0.3s ease;
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 12px;
-    padding: 16px 8px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .toc-sidebar.collapsed {
-    width: 0;
-    opacity: 0;
-    overflow: hidden;
-    padding: 0;
-    border: none;
+    transform: translateX(-260px);
 }
 
 .toc-toggle {
-    position: sticky;
+    position: fixed;
     top: 80px;
-    z-index: 10;
+    left: 260px;
+    z-index: 101;
     width: 32px;
     height: 32px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 14px;
+    border-radius: 0 8px 8px 0;
+    background: #2b1520;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-left: none;
+    color: #ff4d5a;
+    font-size: 16px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    transition: background 0.2s, color 0.2s;
+    transition: left 0.3s ease, background 0.2s ease;
+}
+
+.toc-sidebar.collapsed + .toc-toggle {
+    left: 0;
 }
 
 .toc-toggle:hover {
     background: #ce1c2b;
     color: white;
+}
+
+.toc-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 10px;
 }
 
 .toc-title {
@@ -94,8 +77,8 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 12px;
-    padding: 0 8px;
+    margin-bottom: 16px;
+    padding: 0 12px;
 }
 
 .toc-list {
@@ -110,9 +93,9 @@
 
 .toc-list a {
     display: block;
-    padding: 6px 12px;
+    padding: 8px 16px;
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.6);
     border-left: 2px solid transparent;
     border-radius: 0 6px 6px 0;
     transition: all 0.2s;
@@ -131,25 +114,57 @@
 }
 
 .toc-list .toc-h3 {
-    padding-left: 24px;
+    padding-left: 28px;
     font-size: 12px;
 }
 
-/* --- Article Content --- */
-.article-container {
+/* --- Main Content Area --- */
+.entry-content {
     flex: 1;
-    min-width: 0;
+    margin-left: 260px;
+    padding: 30px 40px 60px;
+    background: #f9d4d7;
+    transition: margin-left 0.3s ease;
+}
+
+.toc-sidebar.collapsed ~ .entry-content {
+    margin-left: 0;
+}
+
+/* --- Breadcrumb --- */
+.breadcrumb {
+    font-size: 13px;
+    color: #666666;
+    margin-bottom: 20px;
+}
+
+.breadcrumb a {
+    color: #444444;
+    transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+    color: #ce1c2b;
+}
+
+.breadcrumb span {
+    margin: 0 6px;
+    opacity: 0.5;
+}
+
+/* --- Article Content (white background) --- */
+.article-container {
     background: #ffffff;
-    border-radius: 16px;
+    border-radius: 14px;
     padding: 36px 40px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(206, 28, 43, 0.08);
+    border: 1px solid rgba(206, 28, 43, 0.1);
+    margin-bottom: 30px;
 }
 
 .article-header {
     margin-bottom: 32px;
     padding-bottom: 24px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(206, 28, 43, 0.08);
 }
 
 .article-header h1 {
@@ -166,7 +181,7 @@
     gap: 16px;
     flex-wrap: wrap;
     font-size: 13px;
-    color: #888888;
+    color: #666666;
 }
 
 .article-meta .meta-date {
@@ -174,7 +189,7 @@
 }
 
 .article-meta .meta-category {
-    background: rgba(206, 28, 43, 0.08);
+    background: rgba(206, 28, 43, 0.1);
     color: #ce1c2b;
     padding: 3px 10px;
     border-radius: 12px;
@@ -193,7 +208,7 @@
     font-size: 11px;
     padding: 3px 10px;
     border-radius: 10px;
-    background: rgba(206, 28, 43, 0.06);
+    background: rgba(206, 28, 43, 0.08);
     color: #ce1c2b;
     border: 1px solid rgba(206, 28, 43, 0.12);
     font-weight: 500;
@@ -292,23 +307,6 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* Figure captions */
-.article-body .figure {
-    text-align: center;
-    margin: 24px 0;
-}
-
-.article-body .figure img {
-    display: block;
-    margin: 0 auto 10px;
-}
-
-.article-body .figure-caption {
-    font-size: 13px;
-    color: #888888;
-    font-style: italic;
-}
-
 .article-body ul, .article-body ol {
     margin: 12px 0 16px 20px;
 }
@@ -393,14 +391,12 @@
 
 /* --- Related Entries --- */
 .related-section {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 30px 40px;
+    padding: 0 0 30px;
 }
 
 .related-section h2 {
     font-size: 1.2rem;
-    color: #ffffff;
+    color: #222222;
     margin-bottom: 20px;
 }
 
@@ -412,8 +408,8 @@
 }
 
 .related-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #ffffff;
+    border: 1px solid rgba(206, 28, 43, 0.12);
     border-radius: 12px;
     padding: 18px;
     display: flex;
@@ -439,14 +435,14 @@
 
 .related-card-text h4 {
     font-size: 14px;
-    color: #f0f0f5;
+    color: #222222;
     margin-bottom: 4px;
     line-height: 1.3;
 }
 
 .related-card-text p {
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.5);
+    color: #666666;
     line-height: 1.4;
 }
 
@@ -457,9 +453,9 @@
     gap: 6px;
     padding: 10px 20px;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: rgba(255, 255, 255, 0.7);
+    background: #ffffff;
+    border: 1px solid rgba(206, 28, 43, 0.12);
+    color: #ce1c2b;
     font-size: 14px;
     font-weight: 500;
     transition: all 0.2s;
@@ -506,6 +502,9 @@
 .entry-page .footer {
     background: #ffffff;
     border-top: 1px solid rgba(0, 0, 0, 0.06);
+    margin-left: 0;
+    position: relative;
+    z-index: 200;
 }
 
 .entry-page .footer p {
@@ -514,8 +513,24 @@
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
-    .entry-wrapper {
-        flex-direction: column;
+    .toc-sidebar {
+        transform: translateX(-260px);
+    }
+
+    .toc-sidebar.open {
+        transform: translateX(0);
+    }
+
+    .toc-toggle {
+        left: 0;
+    }
+
+    .toc-sidebar.open + .toc-toggle {
+        left: 260px;
+    }
+
+    .entry-content {
+        margin-left: 0;
         padding: 20px 16px 40px;
     }
 
@@ -524,39 +539,7 @@
         border-radius: 12px;
     }
 
-    .toc-sidebar {
-        position: static;
-        width: 100%;
-        max-height: none;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
-        padding: 14px;
-        background: rgba(255, 255, 255, 0.04);
-    }
-
-    .toc-sidebar.collapsed {
-        width: 100%;
-        height: 0;
-        padding: 0;
-        border: none;
-    }
-
-    .toc-toggle {
-        position: static;
-        width: 100%;
-        height: auto;
-        padding: 10px;
-        border-radius: 10px;
-        margin-bottom: 10px;
-        font-size: 13px;
-        gap: 6px;
-    }
-
     .related-grid {
         grid-template-columns: 1fr;
-    }
-
-    .breadcrumb {
-        padding: 12px 16px 0;
     }
 }

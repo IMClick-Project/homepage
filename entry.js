@@ -28,7 +28,14 @@
 
     // --- Init ---
     document.addEventListener("DOMContentLoaded", () => {
-        isEnglish = document.documentElement.lang === "en";
+        // Read language from localStorage
+        const savedLang = localStorage.getItem("imclick-lang");
+        if (savedLang) {
+            isEnglish = savedLang === "en";
+            document.documentElement.lang = isEnglish ? "en" : "es";
+        } else {
+            isEnglish = document.documentElement.lang === "en";
+        }
         const params = new URLSearchParams(window.location.search);
         const subject = params.get("subject");
         const file = params.get("file");
@@ -41,6 +48,7 @@
         initLangToggle(subject, file);
         initTocToggle();
         loadSubjectData(subject, file);
+        translateNavbarAndFooter();
     });
 
     // --- Load subject JSON to get metadata ---
@@ -137,8 +145,8 @@
                     .catch(() => {
                         const body = document.getElementById("article-body");
                         if (body) {
-                            body.innerHTML = '<p style="color:rgba(255,255,255,0.5);text-align:center;padding:40px;">' +
-                                (isEnglish ? "Content not available yet. Deploy to GitHub Pages or add the .md file." : "Contenido no disponible aún. Despliega en GitHub Pages o agrega el archivo .md.") +
+                            body.innerHTML = '<p style="color:#888;text-align:center;padding:40px;">' +
+                                (isEnglish ? "Content not available yet." : "Contenido no disponible aún.") +
                                 "</p>";
                         }
                     });
@@ -152,18 +160,20 @@
 
         // Configure marked
         if (window.marked) {
-            marked.setOptions({
-                highlight: function (code, lang) {
-                    if (window.hljs && lang && hljs.getLanguage(lang)) {
-                        return hljs.highlight(code, { language: lang }).value;
-                    }
-                    return code;
-                },
-                breaks: false,
-                gfm: true
-            });
+            if (marked.setOptions) {
+                marked.setOptions({
+                    highlight: function (code, lang) {
+                        if (window.hljs && lang && hljs.getLanguage(lang)) {
+                            return hljs.highlight(code, { language: lang }).value;
+                        }
+                        return code;
+                    },
+                    breaks: false,
+                    gfm: true
+                });
+            }
 
-            let html = marked.parse(content);
+            let html = (marked.parse || marked)(content);
 
             // Render KaTeX (block: $$ ... $$)
             html = html.replace(/\$\$([\s\S]*?)\$\$/g, function (_, tex) {
@@ -329,22 +339,23 @@
 
     // --- TOC Toggle ---
     function initTocToggle() {
-        const toggle = document.querySelector(".toc-toggle");
         const sidebar = document.querySelector(".toc-sidebar");
-        if (!toggle || !sidebar) return;
+        const toggle = document.querySelector(".toc-toggle");
+        if (!sidebar || !toggle) return;
 
         toggle.addEventListener("click", () => {
             sidebar.classList.toggle("collapsed");
+            sidebar.classList.toggle("open");
             const isCollapsed = sidebar.classList.contains("collapsed");
             toggle.innerHTML = isCollapsed
-                ? '<i class="bi bi-list"></i>'
-                : '<i class="bi bi-x-lg"></i>';
+                ? '<i class="bi bi-chevron-right"></i>'
+                : '<i class="bi bi-chevron-left"></i>';
         });
 
         // Mobile: start collapsed
         if (window.innerWidth <= 768) {
             sidebar.classList.add("collapsed");
-            toggle.innerHTML = '<i class="bi bi-list"></i>';
+            toggle.innerHTML = '<i class="bi bi-chevron-right"></i>';
         }
     }
 
@@ -415,6 +426,7 @@
             e.preventDefault();
             isEnglish = !isEnglish;
             document.documentElement.lang = isEnglish ? "en" : "es";
+            localStorage.setItem("imclick-lang", isEnglish ? "en" : "es");
             langBtn.textContent = isEnglish ? "ESP" : "ENG";
 
             // Re-render everything
@@ -423,7 +435,38 @@
             loadMarkdown(subject, file);
             renderRelated(subject);
             renderBackButton(subject);
+            translateNavbarAndFooter();
         });
+    }
+
+    // --- Translate Navbar and Footer ---
+    function translateNavbarAndFooter() {
+        // Navbar links
+        const menuLinks = document.querySelectorAll(".menu > li > a");
+        menuLinks.forEach((link) => {
+            const href = link.getAttribute("href") || "";
+            if (href.includes("study-areas")) {
+                link.textContent = isEnglish ? "Study areas" : "Áreas de estudio";
+            } else if (href.includes("aboutme")) {
+                link.textContent = isEnglish ? "About me" : "Sobre mí";
+            } else if (href.includes("contact")) {
+                link.textContent = isEnglish ? "Contact" : "Contacto";
+            }
+        });
+
+        // Footer
+        const footerP = document.querySelector(".footer p");
+        if (footerP) {
+            footerP.textContent = isEnglish
+                ? "\u00A9 2026 IMClick-Project. All Rights Reserved."
+                : "\u00A9 2026 IMClick-Project. Derechos Reservados.";
+        }
+
+        // TOC title
+        const tocTitle = document.querySelector(".toc-title");
+        if (tocTitle) {
+            tocTitle.textContent = isEnglish ? "Contents" : "Contenido";
+        }
     }
 
     // --- Error State ---
