@@ -477,12 +477,13 @@
 
 /* Subject page footer */
 .subject-page .footer {
-    background: #f9d4d7;
+    background: #ffffff;
+    border-top: 1px solid rgba(206, 28, 43, 0.1);
     margin-left: 0;
     position: relative;
     z-index: 200;
 }
 
 .subject-page .footer p {
-    color: #444444;
+    color: #ce1c2b;
 }
