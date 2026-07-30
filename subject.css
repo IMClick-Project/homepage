@@ -477,8 +477,12 @@
 
 /* Subject page footer */
 .subject-page .footer {
-    background: #ffffff;
+    background: #f9d4d7;
     margin-left: 0;
     position: relative;
     z-index: 200;
+}
+
+.subject-page .footer p {
+    color: #444444;
 }

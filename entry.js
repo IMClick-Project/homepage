@@ -36,7 +36,13 @@
         } else {
             isEnglish = document.documentElement.lang === "en";
         }
-        const params = new URLSearchParams(window.location.search);
+
+        // Get params from URL search or hash (fallback for some hosts)
+        var searchStr = window.location.search || "";
+        if (!searchStr && window.location.hash && window.location.hash.includes("?")) {
+            searchStr = window.location.hash.substring(window.location.hash.indexOf("?"));
+        }
+        const params = new URLSearchParams(searchStr);
         const subject = params.get("subject");
         const file = params.get("file");
 
@@ -74,7 +80,6 @@
         renderHeader();
         loadMarkdown(subject, file);
         renderRelated(subject);
-        renderBackButton(subject);
     }
 
     // --- Breadcrumb ---
@@ -436,7 +441,6 @@
             renderHeader();
             loadMarkdown(subject, file);
             renderRelated(subject);
-            renderBackButton(subject);
             translateNavbarAndFooter();
         });
     }
@@ -475,7 +479,7 @@
     function showError() {
         const body = document.getElementById("article-body");
         if (body) {
-            body.innerHTML = '<p style="color:rgba(255,255,255,0.5);text-align:center;padding:60px;">Entry not found.</p>';
+            body.innerHTML = '<p style="color:#888;text-align:center;padding:60px;">Entry not found.</p>';
         }
     }
 

@@ -500,15 +500,15 @@
 
 /* Entry page footer */
 .entry-page .footer {
-    background: #ffffff;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    background: #f9d4d7;
+    border-top: 1px solid rgba(206, 28, 43, 0.15);
     margin-left: 0;
     position: relative;
     z-index: 200;
 }
 
 .entry-page .footer p {
-    color: #888888;
+    color: #444444;
 }
 
 /* --- Responsive --- */
