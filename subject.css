@@ -16,36 +16,42 @@
 }
 
 /* --- Base & Layout --- */
+.subject-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-top: 64px;
+}
+
 .subject-layout {
     display: flex;
-    min-height: 100vh;
-    padding-top: 64px;
-    background: var(--subject-bg);
+    flex: 1;
+    overflow: hidden;
 }
 
 /* --- Sidebar --- */
 .sidebar {
     width: 260px;
-    min-height: calc(100vh - 64px);
     background: #2b1520;
     border-right: 1px solid rgba(255, 255, 255, 0.06);
-    position: fixed;
-    top: 64px;
-    left: 0;
-    z-index: 100;
     display: flex;
     flex-direction: column;
     padding: 24px 0;
-    transition: transform 0.3s ease;
+    overflow-y: auto;
+    flex-shrink: 0;
+    transition: width 0.3s ease, padding 0.3s ease;
 }
 
 .sidebar.collapsed {
-    transform: translateX(-260px);
+    width: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 .sidebar-toggle {
-    position: fixed;
-    top: 80px;
+    position: absolute;
+    top: 16px;
     left: 260px;
     z-index: 101;
     width: 32px;
@@ -118,14 +124,14 @@
 /* --- Main Content Area --- */
 .subject-content {
     flex: 1;
-    margin-left: 260px;
     padding: 30px 40px;
     background: #ffffff;
-    transition: margin-left 0.3s ease;
+    overflow-y: auto;
+    transition: all 0.3s ease;
 }
 
 .sidebar.collapsed ~ .subject-content {
-    margin-left: 0;
+    /* flex handles it */
 }
 
 /* Subject Header - hero style like homepage */

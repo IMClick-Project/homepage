@@ -5,42 +5,41 @@
 /* --- Layout (same structure as subject pages) --- */
 .entry-page {
     background: #ffffff;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    padding-top: 64px;
 }
 
 .entry-layout {
     display: flex;
     flex: 1;
-    padding-top: 64px;
-    background: #ffffff;
+    overflow: hidden;
 }
 
 /* --- TOC Sidebar (fixed, tinto like subject sidebar) --- */
 .toc-sidebar {
     width: 260px;
-    min-height: calc(100vh - 64px);
     background: #2b1520;
     border-right: 1px solid rgba(255, 255, 255, 0.06);
-    position: fixed;
-    top: 64px;
-    left: 0;
-    z-index: 100;
     display: flex;
     flex-direction: column;
     padding: 24px 0;
-    transition: transform 0.3s ease;
     overflow-y: auto;
+    flex-shrink: 0;
+    transition: width 0.3s ease, padding 0.3s ease;
 }
 
 .toc-sidebar.collapsed {
-    transform: translateX(-260px);
+    width: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 .toc-toggle {
-    position: fixed;
-    top: 80px;
+    position: absolute;
+    top: 16px;
     left: 260px;
     z-index: 101;
     width: 32px;
@@ -123,14 +122,14 @@
 /* --- Main Content Area --- */
 .entry-content {
     flex: 1;
-    margin-left: 260px;
     padding: 30px 40px 60px;
     background: #f9d4d7;
-    transition: margin-left 0.3s ease;
+    overflow-y: auto;
+    transition: all 0.3s ease;
 }
 
 .toc-sidebar.collapsed ~ .entry-content {
-    margin-left: 0;
+    /* no change needed, flex handles it */
 }
 
 /* --- Breadcrumb --- */
