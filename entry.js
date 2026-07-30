@@ -158,44 +158,46 @@
         const fmRegex = /^---\n[\s\S]*?\n---\n?/;
         const content = md.replace(fmRegex, "");
 
-        // Configure marked
+        // Get marked parse function (handles different versions)
+        var parseFn = null;
         if (window.marked) {
-            if (marked.setOptions) {
-                marked.setOptions({
-                    highlight: function (code, lang) {
-                        if (window.hljs && lang && hljs.getLanguage(lang)) {
-                            return hljs.highlight(code, { language: lang }).value;
-                        }
-                        return code;
-                    },
-                    breaks: false,
-                    gfm: true
-                });
+            if (typeof window.marked.parse === "function") {
+                parseFn = window.marked.parse.bind(window.marked);
+            } else if (typeof window.marked === "function") {
+                parseFn = window.marked;
+            } else if (window.marked.marked && typeof window.marked.marked.parse === "function") {
+                parseFn = window.marked.marked.parse.bind(window.marked.marked);
             }
+        }
 
-            let html = (marked.parse || marked)(content);
+        if (!parseFn) return;
 
-            // Render KaTeX (block: $$ ... $$)
-            html = html.replace(/\$\$([\s\S]*?)\$\$/g, function (_, tex) {
-                try {
-                    return katex.renderToString(tex.trim(), { displayMode: true, throwOnError: false });
-                } catch (e) { return "$$" + tex + "$$"; }
-            });
+        var html = parseFn(content);
 
-            // Render KaTeX (inline: $ ... $) — avoid matching $$
-            html = html.replace(/(?<!\$)\$(?!\$)(.*?)(?<!\$)\$(?!\$)/g, function (_, tex) {
-                try {
-                    return katex.renderToString(tex.trim(), { displayMode: false, throwOnError: false });
-                } catch (e) { return "$" + tex + "$"; }
-            });
+        // Render KaTeX (block: $$ ... $$)
+        html = html.replace(/\$\$([\s\S]*?)\$\$/g, function (_, tex) {
+            try {
+                if (window.katex) return katex.renderToString(tex.trim(), { displayMode: true, throwOnError: false });
+            } catch (e) {}
+            return "$$" + tex + "$$";
+        });
 
-            const body = document.getElementById("article-body");
-            if (body) {
-                body.innerHTML = html;
-                wrapSectionsCollapsible();
-                generateTOC();
-                initScrollSpy();
-            }
+        // Render KaTeX (inline: $ ... $ — simple approach without lookbehind)
+        html = html.replace(/\$([^\$]+?)\$/g, function (match, tex) {
+            // Skip if it's actually a $$ (already handled)
+            if (match.startsWith("$$")) return match;
+            try {
+                if (window.katex) return katex.renderToString(tex.trim(), { displayMode: false, throwOnError: false });
+            } catch (e) {}
+            return "$" + tex + "$";
+        });
+
+        var body = document.getElementById("article-body");
+        if (body) {
+            body.innerHTML = html;
+            wrapSectionsCollapsible();
+            generateTOC();
+            initScrollSpy();
         }
     }
 
