@@ -127,11 +127,16 @@ function initBgCanvas() {
     const ctx = canvas.getContext("2d");
     let width, height;
     let particles = [];
-    const COUNT = 50;
+    const COUNT = 65;
 
     const GLYPHS = [
-        "\u03C0", "\u222B", "\u2211", "\u221E", "\u0394", "</>", "{}",
-        "=>", "\u03BB", "\u221A", "H\u2082O", "\u2202", "01", "f(x)", "CO\u2082"
+        // Math
+        "\u03C0", "\u2211", "\u222B", "\u221E", "\u0394", "\u03B1", "\u03B2", "\u2202",
+        "\u221A", "\u00B1", "\u2248", "\u2260", "\u03BB", "\u03B8", "\u03C3", "\u2207",
+        // Programming
+        "{}", "</>", "[]", "=>", "&&", "||", "#", "//", "01", "f(x)",
+        // Chemical Engineering
+        "H\u2082O", "CO\u2082", "\u0394H", "\u03B7", "mol", "P\u2081V\u2081", "Q=mc\u0394T"
     ];
 
     function resize() {
@@ -143,13 +148,13 @@ function initBgCanvas() {
         return {
             x: Math.random() * width,
             y: Math.random() * height,
-            vx: (Math.random() - 0.5) * 0.15,
-            vy: (Math.random() - 0.5) * 0.15,
+            vx: (Math.random() - 0.5) * 0.25,
+            vy: -Math.random() * 0.2 - 0.05,
             glyph: GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
-            size: Math.random() * 18 + 13,
-            opacity: Math.random() * 0.22 + 0.08,
+            size: Math.random() * 14 + 12,
+            opacity: Math.random() * 0.25 + 0.1,
             rotation: Math.random() * Math.PI * 2,
-            rotationSpeed: (Math.random() - 0.5) * 0.003,
+            rotationSpeed: (Math.random() - 0.5) * 0.005,
         };
     }
 
@@ -175,16 +180,16 @@ function initBgCanvas() {
             ctx.translate(s.x, s.y);
             ctx.rotate(s.rotation);
             ctx.font = `${s.size}px "JetBrains Mono", monospace`;
-            ctx.fillStyle = `rgba(160, 160, 190, ${s.opacity})`;
+            ctx.fillStyle = `rgba(206, 28, 43, ${s.opacity})`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText(s.glyph, 0, 0);
             ctx.restore();
 
-            if (s.x < -40) s.x = width + 40;
-            if (s.x > width + 40) s.x = -40;
             if (s.y < -40) s.y = height + 40;
             if (s.y > height + 40) s.y = -40;
+            if (s.x < -40) s.x = width + 40;
+            if (s.x > width + 40) s.x = -40;
         });
 
         animationId = requestAnimationFrame(draw);
@@ -218,8 +223,10 @@ function initMobileMenu() {
         toggle.textContent = menu.classList.contains("active") ? "\u2715" : "\u2630";
     });
 
-    // Close menu when a link is clicked
+    // Close menu when a non-dropdown link is clicked
     menu.querySelectorAll("a").forEach((link) => {
+        // Don't close menu when clicking the dropdown parent
+        if (link.closest(".dropdown") && link.parentElement.classList.contains("dropdown")) return;
         link.addEventListener("click", () => {
             menu.classList.remove("active");
             toggle.textContent = "\u2630";
@@ -234,8 +241,7 @@ function initDropdown() {
     if (!dropdownBtn || !submenu) return;
 
     dropdownBtn.addEventListener("click", function (e) {
-        const isTouch = !window.matchMedia("(hover: hover)").matches;
-        if (isTouch) {
+        if (window.innerWidth <= 768) {
             e.preventDefault();
             submenu.classList.toggle("active");
         }

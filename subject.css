@@ -28,6 +28,7 @@
     display: flex;
     flex: 1;
     overflow: hidden;
+    position: relative;
 }
 
 /* --- Sidebar --- */
@@ -405,8 +406,19 @@
 }
 
 @media (max-width: 768px) {
+    .subject-page {
+        padding-top: 56px;
+    }
+
     .sidebar {
+        position: fixed;
+        top: 56px;
+        left: 0;
+        bottom: 0;
+        z-index: 150;
+        width: 260px;
         transform: translateX(-260px);
+        transition: transform 0.3s ease;
     }
 
     .sidebar.open {
@@ -414,7 +426,10 @@
     }
 
     .sidebar-toggle {
+        position: fixed;
+        top: 72px;
         left: 0;
+        z-index: 151;
     }
 
     .sidebar.open + .sidebar-toggle {
@@ -422,7 +437,6 @@
     }
 
     .subject-content {
-        margin-left: 0;
         padding: 20px 16px;
     }
 
@@ -430,6 +444,12 @@
         flex-direction: column;
         text-align: center;
         gap: 16px;
+        padding: 24px 16px;
+    }
+
+    .subject-hero img {
+        width: 70px;
+        height: 70px;
     }
 
     .entries-grid {

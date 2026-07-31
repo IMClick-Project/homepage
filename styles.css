@@ -582,28 +582,18 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 .resource-card {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    padding: 0;
+    gap: 10px;
+    padding: 12px 18px;
     background: var(--bg-glass);
     border: 1px solid var(--border-glass);
     border-radius: var(--radius-sm);
     transition: all var(--transition-fast);
-    cursor: pointer;
-    position: relative;
 }
 
 .resource-card:hover {
     transform: translateY(-3px);
     border-color: rgba(58, 8, 12, 0.5);
     box-shadow: 0 0 16px rgba(58, 8, 12, 0.4);
-}
-
-.resource-card.active {
-    border-color: rgba(58, 8, 12, 0.6);
-    box-shadow: 0 0 20px rgba(58, 8, 12, 0.5);
-    background: rgba(58, 8, 12, 0.1);
 }
 
 .resource-card i {
@@ -619,41 +609,33 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 }
 
 .resource-card p {
-    display: none;
-}
-
-/* Tooltip on hover */
-.resource-card::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%) scale(0.9);
-    background: rgba(0, 0, 0, 0.85);
-    color: #fff;
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
     white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s, transform 0.2s;
 }
 
-.resource-card:hover::after {
-    opacity: 1;
-    transform: translateX(-50%) scale(1);
+/* Resource active label */
+.resource-active-label {
+    display: none;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: 12px;
+    letter-spacing: 0.5px;
 }
 
 /* Resource expandable sub-items */
 .resource-expand {
-    width: 100%;
+    max-width: 1200px;
+    margin: 14px auto 0;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 14px;
     padding: 20px 0 10px;
     animation: expandIn 0.3s ease;
-    margin-top: 14px;
 }
 
 @keyframes expandIn {
@@ -1048,9 +1030,8 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 /* --- Responsive: Tablet (max 1024px) --- */
 @media (max-width: 1024px) {
     .resources-container {
-        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
     }
-
     .resource-card.span-2 {
         grid-column: span 2;
     }
@@ -1081,7 +1062,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 
     .menu {
         display: none;
-        position: absolute;
+        position: fixed;
         top: 56px;
         left: 0;
         right: 0;
@@ -1090,6 +1071,9 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
         flex-direction: column;
         padding: 12px 0;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        z-index: 9999;
+        max-height: calc(100vh - 56px);
+        overflow-y: auto;
     }
 
     .menu.active {
@@ -1099,6 +1083,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
     .menu li a {
         padding: 14px 24px;
         font-size: 16px;
+        color: #333333;
     }
 
     .menu li a::after {
@@ -1107,12 +1092,23 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 
     .submenu {
         position: static;
-        display: block;
+        display: none;
         box-shadow: none;
         border: none;
-        background: transparent;
+        background: #f9f9f9;
         backdrop-filter: none;
-        padding-left: 20px;
+        padding: 4px 0 4px 20px;
+        border-radius: 0;
+    }
+
+    .submenu.active {
+        display: block;
+    }
+
+    .submenu li a {
+        padding: 10px 24px;
+        font-size: 14px;
+        color: #555555;
     }
 
     /* Hero mobile */
@@ -1150,7 +1146,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 
     /* Resources */
     .resources-container {
-        grid-template-columns: 1fr 1fr;
+        gap: 8px;
     }
 
     .resource-expand {
@@ -1197,7 +1193,11 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 /* --- Responsive: Small Mobile (max 480px) --- */
 @media (max-width: 480px) {
     .resources-container {
-        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .resource-card p {
+        font-size: 11px;
     }
 
     .resource-card.span-2 {

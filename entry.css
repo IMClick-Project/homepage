@@ -16,6 +16,7 @@
     display: flex;
     flex: 1;
     overflow: hidden;
+    position: relative;
 }
 
 /* --- TOC Sidebar (fixed, tinto like subject sidebar) --- */
@@ -514,8 +515,20 @@
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
+    .entry-page {
+        padding-top: 56px;
+    }
+
     .toc-sidebar {
+        position: fixed;
+        top: 56px;
+        left: 0;
+        bottom: 0;
+        z-index: 150;
+        width: 260px;
         transform: translateX(-260px);
+        transition: transform 0.3s ease;
+        border-radius: 0;
     }
 
     .toc-sidebar.open {
@@ -523,7 +536,10 @@
     }
 
     .toc-toggle {
+        position: fixed;
+        top: 72px;
         left: 0;
+        z-index: 151;
     }
 
     .toc-sidebar.open + .toc-toggle {
@@ -536,8 +552,28 @@
     }
 
     .article-container {
-        padding: 24px 18px;
+        padding: 20px 16px;
         border-radius: 12px;
+    }
+
+    .article-header h1 {
+        font-size: 1.4rem;
+    }
+
+    .article-body .section-header {
+        padding: 12px 14px;
+    }
+
+    .article-body .section-content.expanded {
+        padding: 14px;
+    }
+
+    .article-body table {
+        font-size: 12px;
+    }
+
+    .article-body th, .article-body td {
+        padding: 6px 8px;
     }
 
     .related-grid {

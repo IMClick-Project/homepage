@@ -53,6 +53,7 @@
 
         initLangToggle(subject, file);
         initTocToggle();
+        initMobileMenu();
         loadSubjectData(subject, file);
         translateNavbarAndFooter();
     });
@@ -480,6 +481,39 @@
         const body = document.getElementById("article-body");
         if (body) {
             body.innerHTML = '<p style="color:#888;text-align:center;padding:60px;">Entry not found.</p>';
+        }
+    }
+
+    // --- Mobile Menu ---
+    function initMobileMenu() {
+        const toggle = document.querySelector(".menu-toggle");
+        const menu = document.querySelector(".menu");
+        if (!toggle || !menu) return;
+
+        toggle.addEventListener("click", () => {
+            menu.classList.toggle("active");
+            toggle.textContent = menu.classList.contains("active") ? "\u2715" : "\u2630";
+        });
+
+        // Close menu when a non-dropdown link is clicked
+        menu.querySelectorAll("a").forEach((link) => {
+            if (link.closest(".dropdown") && link.parentElement.classList.contains("dropdown")) return;
+            link.addEventListener("click", () => {
+                menu.classList.remove("active");
+                toggle.textContent = "\u2630";
+            });
+        });
+
+        // Dropdown toggle for touch/click
+        const dropdownBtn = document.querySelector(".dropdown > a");
+        const submenu = document.querySelector(".submenu");
+        if (dropdownBtn && submenu) {
+            dropdownBtn.addEventListener("click", function (e) {
+                if (!window.matchMedia("(hover: hover)").matches || window.innerWidth <= 768) {
+                    e.preventDefault();
+                    submenu.classList.toggle("active");
+                }
+            });
         }
     }
 
