@@ -60,10 +60,8 @@ function initParticles() {
             vy: -Math.random() * 0.2 - 0.05,
             glyph: GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
             size: Math.random() * 14 + 12,
-            opacity: Math.random() * 0.25 + 0.1,
-            rotation: (Math.random() - 0.5) * 0.3,
-            rotationSpeed: (Math.random() - 0.5) * 0.001,
-            maxRotation: 0.25,
+            opacity: Math.random() * 0.12 + 0.05,
+            color: Math.random() > 0.5 ? "255, 255, 255" : "206, 28, 43",
         };
     }
 
@@ -83,16 +81,11 @@ function initParticles() {
         symbols.forEach((s, i) => {
             s.x += s.vx;
             s.y += s.vy;
-            s.rotation += s.rotationSpeed;
-            if (Math.abs(s.rotation) > s.maxRotation) {
-                s.rotationSpeed *= -1;
-            }
 
             ctx.save();
             ctx.translate(s.x, s.y);
-            ctx.rotate(s.rotation);
             ctx.font = `${s.size}px "JetBrains Mono", monospace`;
-            ctx.fillStyle = `rgba(206, 28, 43, ${s.opacity})`;
+            ctx.fillStyle = `rgba(${s.color}, ${s.opacity})`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText(s.glyph, 0, 0);
@@ -131,7 +124,6 @@ function initBgCanvas() {
     const ctx = canvas.getContext("2d");
     let width, height;
     let particles = [];
-    const COUNT = 65;
 
     const GLYPHS = [
         // Math
@@ -145,7 +137,7 @@ function initBgCanvas() {
 
     function resize() {
         width = canvas.width = window.innerWidth;
-        height = canvas.height = document.documentElement.scrollHeight;
+        height = canvas.height = window.innerHeight;
     }
 
     function createParticle() {
@@ -156,17 +148,15 @@ function initBgCanvas() {
             vy: -Math.random() * 0.2 - 0.05,
             glyph: GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
             size: Math.random() * 14 + 12,
-            opacity: Math.random() * 0.25 + 0.1,
-            rotation: (Math.random() - 0.5) * 0.3,
-            rotationSpeed: (Math.random() - 0.5) * 0.001,
-            maxRotation: 0.25,
+            opacity: Math.random() * 0.12 + 0.05,
+            color: Math.random() > 0.5 ? "255, 255, 255" : "206, 28, 43",
         };
     }
 
     function init() {
         resize();
         particles = [];
-        for (let i = 0; i < COUNT; i++) {
+        for (let i = 0; i < 65; i++) {
             particles.push(createParticle());
         }
     }
@@ -179,16 +169,11 @@ function initBgCanvas() {
         particles.forEach((s) => {
             s.x += s.vx;
             s.y += s.vy;
-            s.rotation += s.rotationSpeed;
-            if (Math.abs(s.rotation) > s.maxRotation) {
-                s.rotationSpeed *= -1;
-            }
 
             ctx.save();
             ctx.translate(s.x, s.y);
-            ctx.rotate(s.rotation);
             ctx.font = `${s.size}px "JetBrains Mono", monospace`;
-            ctx.fillStyle = `rgba(206, 28, 43, ${s.opacity})`;
+            ctx.fillStyle = `rgba(${s.color}, ${s.opacity})`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText(s.glyph, 0, 0);
