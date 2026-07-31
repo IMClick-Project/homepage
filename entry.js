@@ -201,7 +201,6 @@
         var body = document.getElementById("article-body");
         if (body) {
             body.innerHTML = html;
-            wrapSectionsCollapsible();
             generateTOC();
             initScrollSpy();
         }
@@ -268,15 +267,9 @@
         const tocList = document.getElementById("toc-list");
         if (!body || !tocList) return;
 
-        // Find h2 inside section-headers and h3 inside section-content
-        const sectionHeaders = body.querySelectorAll(".section-header h2");
-        const h3s = body.querySelectorAll(".section-content h3");
+        const headings = body.querySelectorAll("h2, h3");
 
-        const allHeadings = [];
-        sectionHeaders.forEach((h) => allHeadings.push({ el: h, tag: "H2" }));
-        h3s.forEach((h) => allHeadings.push({ el: h, tag: "H3" }));
-
-        if (allHeadings.length === 0) {
+        if (headings.length === 0) {
             const sidebar = document.querySelector(".toc-sidebar");
             const toggle = document.querySelector(".toc-toggle");
             if (sidebar) sidebar.style.display = "none";
@@ -285,13 +278,10 @@
         }
 
         tocList.innerHTML = "";
-        let idx = 0;
 
-        // Build TOC in document order
-        body.querySelectorAll(".section-header h2, .section-content h3").forEach((h) => {
+        headings.forEach((h, idx) => {
             const id = "section-" + idx;
             h.id = id;
-            idx++;
 
             const li = document.createElement("li");
             const a = document.createElement("a");
@@ -302,22 +292,7 @@
 
             a.addEventListener("click", (e) => {
                 e.preventDefault();
-                // If clicking a h2 in a collapsed section, expand it first
-                const sectionHeader = h.closest(".section-header");
-                if (sectionHeader && !sectionHeader.classList.contains("expanded")) {
-                    sectionHeader.click();
-                }
-                // If clicking a h3, expand its parent section
-                const sectionContent = h.closest(".section-content");
-                if (sectionContent && !sectionContent.classList.contains("expanded")) {
-                    const prevHeader = sectionContent.previousElementSibling;
-                    if (prevHeader && prevHeader.classList.contains("section-header")) {
-                        prevHeader.click();
-                    }
-                }
-                setTimeout(() => {
-                    document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "start" });
-                }, 100);
+                document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "start" });
             });
 
             li.appendChild(a);
@@ -340,7 +315,7 @@
             });
         }, { rootMargin: "-80px 0px -60% 0px", threshold: 0 });
 
-        document.querySelectorAll("#article-body .section-header h2, #article-body .section-content h3").forEach((h) => {
+        document.querySelectorAll("#article-body h2, #article-body h3").forEach((h) => {
             observer.observe(h);
         });
     }
