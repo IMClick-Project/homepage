@@ -267,17 +267,21 @@
 .article-body .section-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease;
+    transition: max-height 0.4s ease, padding 0.3s ease;
     padding: 0 18px;
-    background: #fff5f5;
+    background: #ffffff;
     border: 1px solid rgba(206, 28, 43, 0.1);
     border-top: none;
     border-radius: 0 0 10px 10px;
     margin-bottom: 8px;
+    color: #333333;
 }
 
 .article-body .section-content.expanded {
     max-height: 5000px;
+    padding: 18px;
+    overflow: visible;
+}
     padding: 18px;
 }
 
@@ -529,10 +533,23 @@
         transform: translateX(-260px);
         transition: transform 0.3s ease;
         border-radius: 0;
+        background: #2b1520;
+        padding: 24px 0;
+        overflow-y: auto;
+    }
+
+    .toc-sidebar.collapsed {
+        width: 260px;
+        padding: 24px 0;
+        overflow-y: auto;
+        transform: translateX(-260px);
     }
 
     .toc-sidebar.open {
         transform: translateX(0);
+        width: 260px;
+        padding: 24px 0;
+        overflow-y: auto;
     }
 
     .toc-toggle {
@@ -566,6 +583,7 @@
 
     .article-body .section-content.expanded {
         padding: 14px;
+        overflow: visible;
     }
 
     .article-body table {
