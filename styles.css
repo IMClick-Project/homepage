@@ -573,59 +573,87 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
 .resources-container {
     max-width: 1200px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
 }
 
 .resource-card {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 18px 20px;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
     background: var(--bg-glass);
     border: 1px solid var(--border-glass);
-    border-radius: var(--radius-md);
-    transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    position: relative;
 }
 
 .resource-card:hover {
     transform: translateY(-3px);
     border-color: rgba(58, 8, 12, 0.5);
-    background: rgba(58, 8, 12, 0.06);
+    box-shadow: 0 0 16px rgba(58, 8, 12, 0.4);
+}
+
+.resource-card.active {
+    border-color: rgba(58, 8, 12, 0.6);
+    box-shadow: 0 0 20px rgba(58, 8, 12, 0.5);
+    background: rgba(58, 8, 12, 0.1);
 }
 
 .resource-card i {
-    font-size: 26px;
-    color: #3a080c;
-    transition: transform var(--transition-fast);
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all var(--transition-fast);
     flex-shrink: 0;
 }
 
 .resource-card:hover i {
+    color: #ffffff;
     transform: scale(1.15);
 }
 
 .resource-card p {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin: 0;
+    display: none;
 }
 
-/* Bento variation for larger cards */
-.resource-card.span-2 {
-    grid-column: span 2;
+/* Tooltip on hover */
+.resource-card::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.9);
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.resource-card:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
 }
 
 /* Resource expandable sub-items */
 .resource-expand {
-    grid-column: 1 / -1;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 14px;
     padding: 20px 0 10px;
     animation: expandIn 0.3s ease;
+    margin-top: 14px;
 }
 
 @keyframes expandIn {

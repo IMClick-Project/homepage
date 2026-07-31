@@ -395,8 +395,13 @@ function initResourceExpand() {
             footer.textContent = isEn ? "...and much more" : "...y mucho más";
             panel.appendChild(footer);
 
-            // Insert panel after the card in the grid
-            card.after(panel);
+            // Insert panel after the resources container
+            const container = card.closest(".resources-container");
+            if (container) {
+                container.after(panel);
+            } else {
+                card.after(panel);
+            }
             activePanel = panel;
         });
     });
