@@ -264,58 +264,62 @@
 
     // --- Translate Navbar and Footer ---
     function translateNavbarAndFooter() {
-        // Navbar links
+        // Navbar main links
         const menuLinks = document.querySelectorAll(".menu > li > a");
         menuLinks.forEach((link) => {
-            if (link.getAttribute("href") && link.getAttribute("href").includes("study-areas")) {
+            var href = link.getAttribute("href") || "";
+            if (href.includes("study-areas")) {
                 link.textContent = isEnglish ? "Study areas" : "Áreas de estudio";
-            } else if (link.getAttribute("href") && link.getAttribute("href").includes("aboutme")) {
+            } else if (href.includes("aboutme")) {
                 link.textContent = isEnglish ? "About me" : "Sobre mí";
-            } else if (link.getAttribute("href") && link.getAttribute("href").includes("contact")) {
+            } else if (href.includes("contact")) {
                 link.textContent = isEnglish ? "Contact" : "Contacto";
             }
         });
 
-        // Submenu links
-        const submenuLinks = document.querySelectorAll(".submenu a");
-        submenuLinks.forEach((link) => {
-            const href = link.getAttribute("href") || "";
-            if (href.includes("informatica")) {
-                link.textContent = isEnglish ? "Informatics" : "Informática";
-            } else if (href.includes("matematicas")) {
-                link.textContent = isEnglish ? "Math" : "Matemáticas";
-            } else if (href.includes("ingenieria-quimica")) {
-                link.textContent = isEnglish ? "Chemical Engineering" : "Ingeniería Química";
-            }
-        });
+        // Submenu links - translate all by href or position
+        var subjectNames = {
+            "informatica": { es: "Informática", en: "Informatics" },
+            "matematicas": { es: "Matemáticas", en: "Math" },
+            "ingenieria-quimica": { es: "Ingeniería Química", en: "Chemical Engineering" }
+        };
 
-        // Disabled submenu (current page)
-        const disabledLinks = document.querySelectorAll(".submenu .disabled a");
-        disabledLinks.forEach((link) => {
-            const href = link.getAttribute("href") || link.parentElement.textContent || "";
-            if (href.includes("Informática") || href.includes("Informatics") || link.textContent.includes("Informática")) {
-                link.textContent = isEnglish ? "Informatics" : "Informática";
-            } else if (href.includes("Matemáticas") || link.textContent.includes("Matemáticas")) {
-                link.textContent = isEnglish ? "Math" : "Matemáticas";
-            } else if (href.includes("Ingeniería") || link.textContent.includes("Ingeniería")) {
-                link.textContent = isEnglish ? "Chemical Engineering" : "Ingeniería Química";
+        document.querySelectorAll(".submenu li").forEach(function(li) {
+            var link = li.querySelector("a");
+            if (!link) return;
+            var href = link.getAttribute("href") || "";
+
+            // Match by href
+            for (var key in subjectNames) {
+                if (href.includes(key)) {
+                    link.textContent = isEnglish ? subjectNames[key].en : subjectNames[key].es;
+                    return;
+                }
+            }
+
+            // Disabled item (href="#") — use body data-subject
+            if (li.classList.contains("disabled")) {
+                var currentSubject = document.body.dataset.subject;
+                if (currentSubject && subjectNames[currentSubject]) {
+                    link.textContent = isEnglish ? subjectNames[currentSubject].en : subjectNames[currentSubject].es;
+                }
             }
         });
 
         // Footer
-        const footerP = document.querySelector(".footer p");
+        var footerP = document.querySelector(".footer p");
         if (footerP) {
             footerP.textContent = isEnglish
-                ? "© 2026 IMClick-Project. All Rights Reserved."
-                : "© 2026 IMClick-Project. Derechos Reservados.";
+                ? "\u00A9 2026 IMClick-Project. All Rights Reserved."
+                : "\u00A9 2026 IMClick-Project. Derechos Reservados.";
         }
 
         // Subject hero text
-        const heroH1 = document.querySelector(".subject-hero-text h1");
-        const heroP = document.querySelector(".subject-hero-text p");
-        const subject = document.body.dataset.subject;
+        var heroH1 = document.querySelector(".subject-hero-text h1");
+        var heroP = document.querySelector(".subject-hero-text p");
+        var subject = document.body.dataset.subject;
         if (heroH1 && subject) {
-            const HERO_TEXT = {
+            var HERO_TEXT = {
                 "informatica": {
                     es: { title: "Informática", desc: "Fundamentos, algoritmos, lógica y programación competitiva." },
                     en: { title: "Informatics", desc: "Fundamentals, algorithms, logic and competitive programming." }
@@ -329,7 +333,7 @@
                     en: { title: "Chemical Engineering", desc: "Principles, applications, exercises and resources." }
                 }
             };
-            const texts = HERO_TEXT[subject];
+            var texts = HERO_TEXT[subject];
             if (texts) {
                 heroH1.textContent = isEnglish ? texts.en.title : texts.es.title;
                 if (heroP) heroP.textContent = isEnglish ? texts.en.desc : texts.es.desc;

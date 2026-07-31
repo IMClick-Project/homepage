@@ -423,10 +423,10 @@
 
     // --- Translate Navbar and Footer ---
     function translateNavbarAndFooter() {
-        // Navbar links
-        const menuLinks = document.querySelectorAll(".menu > li > a");
-        menuLinks.forEach((link) => {
-            const href = link.getAttribute("href") || "";
+        // Navbar main links
+        var menuLinks = document.querySelectorAll(".menu > li > a");
+        menuLinks.forEach(function(link) {
+            var href = link.getAttribute("href") || "";
             if (href.includes("study-areas")) {
                 link.textContent = isEnglish ? "Study areas" : "Áreas de estudio";
             } else if (href.includes("aboutme")) {
@@ -436,8 +436,28 @@
             }
         });
 
+        // Submenu links
+        var subjectNames = {
+            "informatica": { es: "Informática", en: "Informatics" },
+            "matematicas": { es: "Matemáticas", en: "Math" },
+            "ingenieria-quimica": { es: "Ingeniería Química", en: "Chemical Engineering" }
+        };
+
+        document.querySelectorAll(".submenu li").forEach(function(li) {
+            var link = li.querySelector("a");
+            if (!link) return;
+            var href = link.getAttribute("href") || "";
+
+            for (var key in subjectNames) {
+                if (href.includes(key)) {
+                    link.textContent = isEnglish ? subjectNames[key].en : subjectNames[key].es;
+                    return;
+                }
+            }
+        });
+
         // Footer
-        const footerP = document.querySelector(".footer p");
+        var footerP = document.querySelector(".footer p");
         if (footerP) {
             footerP.textContent = isEnglish
                 ? "\u00A9 2026 IMClick-Project. All Rights Reserved."
@@ -445,7 +465,7 @@
         }
 
         // TOC title
-        const tocTitle = document.querySelector(".toc-title");
+        var tocTitle = document.querySelector(".toc-title");
         if (tocTitle) {
             tocTitle.textContent = isEnglish ? "Contents" : "Contenido";
         }
