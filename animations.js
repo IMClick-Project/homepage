@@ -61,8 +61,9 @@ function initParticles() {
             glyph: GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
             size: Math.random() * 14 + 12,
             opacity: Math.random() * 0.25 + 0.1,
-            rotation: Math.random() * Math.PI * 2,
-            rotationSpeed: (Math.random() - 0.5) * 0.005,
+            rotation: (Math.random() - 0.5) * 0.3,
+            rotationSpeed: (Math.random() - 0.5) * 0.001,
+            maxRotation: 0.25,
         };
     }
 
@@ -83,6 +84,9 @@ function initParticles() {
             s.x += s.vx;
             s.y += s.vy;
             s.rotation += s.rotationSpeed;
+            if (Math.abs(s.rotation) > s.maxRotation) {
+                s.rotationSpeed *= -1;
+            }
 
             ctx.save();
             ctx.translate(s.x, s.y);
@@ -153,8 +157,9 @@ function initBgCanvas() {
             glyph: GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
             size: Math.random() * 14 + 12,
             opacity: Math.random() * 0.25 + 0.1,
-            rotation: Math.random() * Math.PI * 2,
-            rotationSpeed: (Math.random() - 0.5) * 0.005,
+            rotation: (Math.random() - 0.5) * 0.3,
+            rotationSpeed: (Math.random() - 0.5) * 0.001,
+            maxRotation: 0.25,
         };
     }
 
@@ -175,6 +180,9 @@ function initBgCanvas() {
             s.x += s.vx;
             s.y += s.vy;
             s.rotation += s.rotationSpeed;
+            if (Math.abs(s.rotation) > s.maxRotation) {
+                s.rotationSpeed *= -1;
+            }
 
             ctx.save();
             ctx.translate(s.x, s.y);

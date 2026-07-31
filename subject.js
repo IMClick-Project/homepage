@@ -61,8 +61,9 @@
                 glyph: glyphs[Math.floor(Math.random() * glyphs.length)],
                 size: Math.random() * 12 + 10,
                 opacity: Math.random() * 0.3 + 0.15,
-                rotation: Math.random() * Math.PI * 2,
-                rotationSpeed: (Math.random() - 0.5) * 0.004,
+                rotation: (Math.random() - 0.5) * 0.3,
+                rotationSpeed: (Math.random() - 0.5) * 0.001,
+                maxRotation: 0.25,
             };
         }
 
@@ -83,6 +84,9 @@
                 s.x += s.vx;
                 s.y += s.vy;
                 s.rotation += s.rotationSpeed;
+                if (Math.abs(s.rotation) > s.maxRotation) {
+                    s.rotationSpeed *= -1;
+                }
 
                 ctx.save();
                 ctx.translate(s.x, s.y);
