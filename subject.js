@@ -17,7 +17,7 @@
     const CATEGORIES = {
         "all": { es: "Todos", en: "All", icon: "bi-grid" },
         "notas-teoricas": { es: "Notas teóricas", en: "Theory notes", icon: "bi-journal-text" },
-        "bibliografia": { es: "Bibliografía", en: "Bibliography", icon: "bi-book" },
+        "bibliografia": { es: "Bibliografía relevante", en: "Relevant bibliography", icon: "bi-book" },
         "ejercicios-resueltos": { es: "Ejercicios resueltos", en: "Solved exercises", icon: "bi-calculator" },
         "proyectos-integrales": { es: "Proyectos integrales", en: "Integrated projects", icon: "bi-diagram-3" },
         "codigos-documentados": { es: "Códigos documentados", en: "Documented code", icon: "bi-code-slash" },
@@ -440,7 +440,7 @@
                     </div>
                     <div class="entry-card-footer">
                         <span class="entry-card-date">${dateStr}</span>
-                        <a href="${link}" target="_blank" rel="noopener noreferrer" class="entry-card-link">
+                        <a href="${link}" class="entry-card-link">
                             ${isEnglish ? "See more" : "Ver más"} <i class="bi bi-arrow-right-short"></i>
                         </a>
                     </div>

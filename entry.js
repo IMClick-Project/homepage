@@ -11,7 +11,7 @@
 
     const CATEGORIES = {
         "notas-teoricas": { es: "Notas teóricas", en: "Theory notes" },
-        "bibliografia": { es: "Bibliografía", en: "Bibliography" },
+        "bibliografia": { es: "Bibliografía relevante", en: "Relevant bibliography" },
         "ejercicios-resueltos": { es: "Ejercicios resueltos", en: "Solved exercises" },
         "proyectos-integrales": { es: "Proyectos integrales", en: "Integrated projects" },
         "codigos-documentados": { es: "Códigos documentados", en: "Documented code" },
